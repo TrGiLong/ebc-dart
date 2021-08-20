@@ -4,7 +4,7 @@ RPC_PATH="api/etcdserverpb"
 AUTH_PATH="api/authpb"
 MVCCPB="api/mvccpb"
 
-TARGET="./"
+TARGET="."
 PROTO_TARGET="${TARGET}/proto"
 VERSION="v3.5.0"
 
@@ -29,4 +29,3 @@ curl -L "https://raw.githubusercontent.com/googleapis/api-common-protos/${GAPI_V
 curl -L "https://raw.githubusercontent.com/protocolbuffers/protobuf/${PROTOBUF_VERSION}/src/google/protobuf/descriptor.proto" > "${PROTO_TARGET}/google/protobuf/descriptor.proto"
 
 find "$PROTO_TARGET" -iname '*.proto' | xargs -t protoc --dart_out="${TARGET}/lib/src" -I "$PROTO_TARGET"
-touch ./packages/etcd_client/pubspec.yaml
