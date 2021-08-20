@@ -5,14 +5,13 @@
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
-import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../mvccpb/kv.pb.dart' as $1;
-import '../authpb/auth.pb.dart' as $2;
+import '../mvccpb/kv.pb.dart' as $2;
+import '../authpb/auth.pb.dart' as $3;
 
 import 'rpc.pbenum.dart';
 
@@ -325,7 +324,7 @@ class RangeRequest extends $pb.GeneratedMessage {
 class RangeResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RangeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOM<ResponseHeader>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'header', subBuilder: ResponseHeader.create)
-    ..pc<$1.KeyValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'kvs', $pb.PbFieldType.PM, subBuilder: $1.KeyValue.create)
+    ..pc<$2.KeyValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'kvs', $pb.PbFieldType.PM, subBuilder: $2.KeyValue.create)
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'more')
     ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count')
     ..hasRequiredFields = false
@@ -334,7 +333,7 @@ class RangeResponse extends $pb.GeneratedMessage {
   RangeResponse._() : super();
   factory RangeResponse({
     ResponseHeader? header,
-    $core.Iterable<$1.KeyValue>? kvs,
+    $core.Iterable<$2.KeyValue>? kvs,
     $core.bool? more,
     $fixnum.Int64? count,
   }) {
@@ -386,7 +385,7 @@ class RangeResponse extends $pb.GeneratedMessage {
   ResponseHeader ensureHeader() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<$1.KeyValue> get kvs => $_getList(1);
+  $core.List<$2.KeyValue> get kvs => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.bool get more => $_getBF(2);
@@ -527,14 +526,14 @@ class PutRequest extends $pb.GeneratedMessage {
 class PutResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PutResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOM<ResponseHeader>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'header', subBuilder: ResponseHeader.create)
-    ..aOM<$1.KeyValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prevKv', subBuilder: $1.KeyValue.create)
+    ..aOM<$2.KeyValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prevKv', subBuilder: $2.KeyValue.create)
     ..hasRequiredFields = false
   ;
 
   PutResponse._() : super();
   factory PutResponse({
     ResponseHeader? header,
-    $1.KeyValue? prevKv,
+    $2.KeyValue? prevKv,
   }) {
     final _result = create();
     if (header != null) {
@@ -578,15 +577,15 @@ class PutResponse extends $pb.GeneratedMessage {
   ResponseHeader ensureHeader() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $1.KeyValue get prevKv => $_getN(1);
+  $2.KeyValue get prevKv => $_getN(1);
   @$pb.TagNumber(2)
-  set prevKv($1.KeyValue v) { setField(2, v); }
+  set prevKv($2.KeyValue v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasPrevKv() => $_has(1);
   @$pb.TagNumber(2)
   void clearPrevKv() => clearField(2);
   @$pb.TagNumber(2)
-  $1.KeyValue ensurePrevKv() => $_ensure(1);
+  $2.KeyValue ensurePrevKv() => $_ensure(1);
 }
 
 class DeleteRangeRequest extends $pb.GeneratedMessage {
@@ -668,7 +667,7 @@ class DeleteRangeResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteRangeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOM<ResponseHeader>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'header', subBuilder: ResponseHeader.create)
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deleted')
-    ..pc<$1.KeyValue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prevKvs', $pb.PbFieldType.PM, subBuilder: $1.KeyValue.create)
+    ..pc<$2.KeyValue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prevKvs', $pb.PbFieldType.PM, subBuilder: $2.KeyValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -676,7 +675,7 @@ class DeleteRangeResponse extends $pb.GeneratedMessage {
   factory DeleteRangeResponse({
     ResponseHeader? header,
     $fixnum.Int64? deleted,
-    $core.Iterable<$1.KeyValue>? prevKvs,
+    $core.Iterable<$2.KeyValue>? prevKvs,
   }) {
     final _result = create();
     if (header != null) {
@@ -732,7 +731,7 @@ class DeleteRangeResponse extends $pb.GeneratedMessage {
   void clearDeleted() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$1.KeyValue> get prevKvs => $_getList(2);
+  $core.List<$2.KeyValue> get prevKvs => $_getList(2);
 }
 
 enum RequestOp_Request {
@@ -2029,7 +2028,7 @@ class WatchResponse extends $pb.GeneratedMessage {
     ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compactRevision')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cancelReason')
     ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fragment')
-    ..pc<$1.Event>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'events', $pb.PbFieldType.PM, subBuilder: $1.Event.create)
+    ..pc<$2.Event>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'events', $pb.PbFieldType.PM, subBuilder: $2.Event.create)
     ..hasRequiredFields = false
   ;
 
@@ -2042,7 +2041,7 @@ class WatchResponse extends $pb.GeneratedMessage {
     $fixnum.Int64? compactRevision,
     $core.String? cancelReason,
     $core.bool? fragment,
-    $core.Iterable<$1.Event>? events,
+    $core.Iterable<$2.Event>? events,
   }) {
     final _result = create();
     if (header != null) {
@@ -2158,7 +2157,7 @@ class WatchResponse extends $pb.GeneratedMessage {
   void clearFragment() => clearField(7);
 
   @$pb.TagNumber(11)
-  $core.List<$1.Event> get events => $_getList(7);
+  $core.List<$2.Event> get events => $_getList(7);
 }
 
 class LeaseGrantRequest extends $pb.GeneratedMessage {
@@ -4461,7 +4460,7 @@ class AuthUserAddRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AuthUserAddRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'password')
-    ..aOM<$2.UserAddOptions>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $2.UserAddOptions.create)
+    ..aOM<$3.UserAddOptions>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'options', subBuilder: $3.UserAddOptions.create)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hashedPassword', protoName: 'hashedPassword')
     ..hasRequiredFields = false
   ;
@@ -4470,7 +4469,7 @@ class AuthUserAddRequest extends $pb.GeneratedMessage {
   factory AuthUserAddRequest({
     $core.String? name,
     $core.String? password,
-    $2.UserAddOptions? options,
+    $3.UserAddOptions? options,
     $core.String? hashedPassword,
   }) {
     final _result = create();
@@ -4528,15 +4527,15 @@ class AuthUserAddRequest extends $pb.GeneratedMessage {
   void clearPassword() => clearField(2);
 
   @$pb.TagNumber(3)
-  $2.UserAddOptions get options => $_getN(2);
+  $3.UserAddOptions get options => $_getN(2);
   @$pb.TagNumber(3)
-  set options($2.UserAddOptions v) { setField(3, v); }
+  set options($3.UserAddOptions v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
   void clearOptions() => clearField(3);
   @$pb.TagNumber(3)
-  $2.UserAddOptions ensureOptions() => $_ensure(2);
+  $3.UserAddOptions ensureOptions() => $_ensure(2);
 
   @$pb.TagNumber(4)
   $core.String get hashedPassword => $_getSZ(3);
@@ -5041,14 +5040,14 @@ class AuthRoleDeleteRequest extends $pb.GeneratedMessage {
 class AuthRoleGrantPermissionRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AuthRoleGrantPermissionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOM<$2.Permission>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'perm', subBuilder: $2.Permission.create)
+    ..aOM<$3.Permission>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'perm', subBuilder: $3.Permission.create)
     ..hasRequiredFields = false
   ;
 
   AuthRoleGrantPermissionRequest._() : super();
   factory AuthRoleGrantPermissionRequest({
     $core.String? name,
-    $2.Permission? perm,
+    $3.Permission? perm,
   }) {
     final _result = create();
     if (name != null) {
@@ -5090,15 +5089,15 @@ class AuthRoleGrantPermissionRequest extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $2.Permission get perm => $_getN(1);
+  $3.Permission get perm => $_getN(1);
   @$pb.TagNumber(2)
-  set perm($2.Permission v) { setField(2, v); }
+  set perm($3.Permission v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasPerm() => $_has(1);
   @$pb.TagNumber(2)
   void clearPerm() => clearField(2);
   @$pb.TagNumber(2)
-  $2.Permission ensurePerm() => $_ensure(1);
+  $3.Permission ensurePerm() => $_ensure(1);
 }
 
 class AuthRoleRevokePermissionRequest extends $pb.GeneratedMessage {
@@ -5768,14 +5767,14 @@ class AuthRoleAddResponse extends $pb.GeneratedMessage {
 class AuthRoleGetResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AuthRoleGetResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'etcdserverpb'), createEmptyInstance: create)
     ..aOM<ResponseHeader>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'header', subBuilder: ResponseHeader.create)
-    ..pc<$2.Permission>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'perm', $pb.PbFieldType.PM, subBuilder: $2.Permission.create)
+    ..pc<$3.Permission>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'perm', $pb.PbFieldType.PM, subBuilder: $3.Permission.create)
     ..hasRequiredFields = false
   ;
 
   AuthRoleGetResponse._() : super();
   factory AuthRoleGetResponse({
     ResponseHeader? header,
-    $core.Iterable<$2.Permission>? perm,
+    $core.Iterable<$3.Permission>? perm,
   }) {
     final _result = create();
     if (header != null) {
@@ -5819,7 +5818,7 @@ class AuthRoleGetResponse extends $pb.GeneratedMessage {
   ResponseHeader ensureHeader() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<$2.Permission> get perm => $_getList(1);
+  $core.List<$3.Permission> get perm => $_getList(1);
 }
 
 class AuthRoleListResponse extends $pb.GeneratedMessage {
@@ -6081,205 +6080,5 @@ class AuthRoleRevokePermissionResponse extends $pb.GeneratedMessage {
   void clearHeader() => clearField(1);
   @$pb.TagNumber(1)
   ResponseHeader ensureHeader() => $_ensure(0);
-}
-
-class KVApi {
-  $pb.RpcClient _client;
-  KVApi(this._client);
-
-  $async.Future<RangeResponse> range($pb.ClientContext? ctx, RangeRequest request) {
-    var emptyResponse = RangeResponse();
-    return _client.invoke<RangeResponse>(ctx, 'KV', 'Range', request, emptyResponse);
-  }
-  $async.Future<PutResponse> put($pb.ClientContext? ctx, PutRequest request) {
-    var emptyResponse = PutResponse();
-    return _client.invoke<PutResponse>(ctx, 'KV', 'Put', request, emptyResponse);
-  }
-  $async.Future<DeleteRangeResponse> deleteRange($pb.ClientContext? ctx, DeleteRangeRequest request) {
-    var emptyResponse = DeleteRangeResponse();
-    return _client.invoke<DeleteRangeResponse>(ctx, 'KV', 'DeleteRange', request, emptyResponse);
-  }
-  $async.Future<TxnResponse> txn($pb.ClientContext? ctx, TxnRequest request) {
-    var emptyResponse = TxnResponse();
-    return _client.invoke<TxnResponse>(ctx, 'KV', 'Txn', request, emptyResponse);
-  }
-  $async.Future<CompactionResponse> compact($pb.ClientContext? ctx, CompactionRequest request) {
-    var emptyResponse = CompactionResponse();
-    return _client.invoke<CompactionResponse>(ctx, 'KV', 'Compact', request, emptyResponse);
-  }
-}
-
-class WatchApi {
-  $pb.RpcClient _client;
-  WatchApi(this._client);
-
-  $async.Future<WatchResponse> watch($pb.ClientContext? ctx, WatchRequest request) {
-    var emptyResponse = WatchResponse();
-    return _client.invoke<WatchResponse>(ctx, 'Watch', 'Watch', request, emptyResponse);
-  }
-}
-
-class LeaseApi {
-  $pb.RpcClient _client;
-  LeaseApi(this._client);
-
-  $async.Future<LeaseGrantResponse> leaseGrant($pb.ClientContext? ctx, LeaseGrantRequest request) {
-    var emptyResponse = LeaseGrantResponse();
-    return _client.invoke<LeaseGrantResponse>(ctx, 'Lease', 'LeaseGrant', request, emptyResponse);
-  }
-  $async.Future<LeaseRevokeResponse> leaseRevoke($pb.ClientContext? ctx, LeaseRevokeRequest request) {
-    var emptyResponse = LeaseRevokeResponse();
-    return _client.invoke<LeaseRevokeResponse>(ctx, 'Lease', 'LeaseRevoke', request, emptyResponse);
-  }
-  $async.Future<LeaseKeepAliveResponse> leaseKeepAlive($pb.ClientContext? ctx, LeaseKeepAliveRequest request) {
-    var emptyResponse = LeaseKeepAliveResponse();
-    return _client.invoke<LeaseKeepAliveResponse>(ctx, 'Lease', 'LeaseKeepAlive', request, emptyResponse);
-  }
-  $async.Future<LeaseTimeToLiveResponse> leaseTimeToLive($pb.ClientContext? ctx, LeaseTimeToLiveRequest request) {
-    var emptyResponse = LeaseTimeToLiveResponse();
-    return _client.invoke<LeaseTimeToLiveResponse>(ctx, 'Lease', 'LeaseTimeToLive', request, emptyResponse);
-  }
-  $async.Future<LeaseLeasesResponse> leaseLeases($pb.ClientContext? ctx, LeaseLeasesRequest request) {
-    var emptyResponse = LeaseLeasesResponse();
-    return _client.invoke<LeaseLeasesResponse>(ctx, 'Lease', 'LeaseLeases', request, emptyResponse);
-  }
-}
-
-class ClusterApi {
-  $pb.RpcClient _client;
-  ClusterApi(this._client);
-
-  $async.Future<MemberAddResponse> memberAdd($pb.ClientContext? ctx, MemberAddRequest request) {
-    var emptyResponse = MemberAddResponse();
-    return _client.invoke<MemberAddResponse>(ctx, 'Cluster', 'MemberAdd', request, emptyResponse);
-  }
-  $async.Future<MemberRemoveResponse> memberRemove($pb.ClientContext? ctx, MemberRemoveRequest request) {
-    var emptyResponse = MemberRemoveResponse();
-    return _client.invoke<MemberRemoveResponse>(ctx, 'Cluster', 'MemberRemove', request, emptyResponse);
-  }
-  $async.Future<MemberUpdateResponse> memberUpdate($pb.ClientContext? ctx, MemberUpdateRequest request) {
-    var emptyResponse = MemberUpdateResponse();
-    return _client.invoke<MemberUpdateResponse>(ctx, 'Cluster', 'MemberUpdate', request, emptyResponse);
-  }
-  $async.Future<MemberListResponse> memberList($pb.ClientContext? ctx, MemberListRequest request) {
-    var emptyResponse = MemberListResponse();
-    return _client.invoke<MemberListResponse>(ctx, 'Cluster', 'MemberList', request, emptyResponse);
-  }
-  $async.Future<MemberPromoteResponse> memberPromote($pb.ClientContext? ctx, MemberPromoteRequest request) {
-    var emptyResponse = MemberPromoteResponse();
-    return _client.invoke<MemberPromoteResponse>(ctx, 'Cluster', 'MemberPromote', request, emptyResponse);
-  }
-}
-
-class MaintenanceApi {
-  $pb.RpcClient _client;
-  MaintenanceApi(this._client);
-
-  $async.Future<AlarmResponse> alarm($pb.ClientContext? ctx, AlarmRequest request) {
-    var emptyResponse = AlarmResponse();
-    return _client.invoke<AlarmResponse>(ctx, 'Maintenance', 'Alarm', request, emptyResponse);
-  }
-  $async.Future<StatusResponse> status($pb.ClientContext? ctx, StatusRequest request) {
-    var emptyResponse = StatusResponse();
-    return _client.invoke<StatusResponse>(ctx, 'Maintenance', 'Status', request, emptyResponse);
-  }
-  $async.Future<DefragmentResponse> defragment($pb.ClientContext? ctx, DefragmentRequest request) {
-    var emptyResponse = DefragmentResponse();
-    return _client.invoke<DefragmentResponse>(ctx, 'Maintenance', 'Defragment', request, emptyResponse);
-  }
-  $async.Future<HashResponse> hash($pb.ClientContext? ctx, HashRequest request) {
-    var emptyResponse = HashResponse();
-    return _client.invoke<HashResponse>(ctx, 'Maintenance', 'Hash', request, emptyResponse);
-  }
-  $async.Future<HashKVResponse> hashKV($pb.ClientContext? ctx, HashKVRequest request) {
-    var emptyResponse = HashKVResponse();
-    return _client.invoke<HashKVResponse>(ctx, 'Maintenance', 'HashKV', request, emptyResponse);
-  }
-  $async.Future<SnapshotResponse> snapshot($pb.ClientContext? ctx, SnapshotRequest request) {
-    var emptyResponse = SnapshotResponse();
-    return _client.invoke<SnapshotResponse>(ctx, 'Maintenance', 'Snapshot', request, emptyResponse);
-  }
-  $async.Future<MoveLeaderResponse> moveLeader($pb.ClientContext? ctx, MoveLeaderRequest request) {
-    var emptyResponse = MoveLeaderResponse();
-    return _client.invoke<MoveLeaderResponse>(ctx, 'Maintenance', 'MoveLeader', request, emptyResponse);
-  }
-  $async.Future<DowngradeResponse> downgrade($pb.ClientContext? ctx, DowngradeRequest request) {
-    var emptyResponse = DowngradeResponse();
-    return _client.invoke<DowngradeResponse>(ctx, 'Maintenance', 'Downgrade', request, emptyResponse);
-  }
-}
-
-class AuthApi {
-  $pb.RpcClient _client;
-  AuthApi(this._client);
-
-  $async.Future<AuthEnableResponse> authEnable($pb.ClientContext? ctx, AuthEnableRequest request) {
-    var emptyResponse = AuthEnableResponse();
-    return _client.invoke<AuthEnableResponse>(ctx, 'Auth', 'AuthEnable', request, emptyResponse);
-  }
-  $async.Future<AuthDisableResponse> authDisable($pb.ClientContext? ctx, AuthDisableRequest request) {
-    var emptyResponse = AuthDisableResponse();
-    return _client.invoke<AuthDisableResponse>(ctx, 'Auth', 'AuthDisable', request, emptyResponse);
-  }
-  $async.Future<AuthStatusResponse> authStatus($pb.ClientContext? ctx, AuthStatusRequest request) {
-    var emptyResponse = AuthStatusResponse();
-    return _client.invoke<AuthStatusResponse>(ctx, 'Auth', 'AuthStatus', request, emptyResponse);
-  }
-  $async.Future<AuthenticateResponse> authenticate($pb.ClientContext? ctx, AuthenticateRequest request) {
-    var emptyResponse = AuthenticateResponse();
-    return _client.invoke<AuthenticateResponse>(ctx, 'Auth', 'Authenticate', request, emptyResponse);
-  }
-  $async.Future<AuthUserAddResponse> userAdd($pb.ClientContext? ctx, AuthUserAddRequest request) {
-    var emptyResponse = AuthUserAddResponse();
-    return _client.invoke<AuthUserAddResponse>(ctx, 'Auth', 'UserAdd', request, emptyResponse);
-  }
-  $async.Future<AuthUserGetResponse> userGet($pb.ClientContext? ctx, AuthUserGetRequest request) {
-    var emptyResponse = AuthUserGetResponse();
-    return _client.invoke<AuthUserGetResponse>(ctx, 'Auth', 'UserGet', request, emptyResponse);
-  }
-  $async.Future<AuthUserListResponse> userList($pb.ClientContext? ctx, AuthUserListRequest request) {
-    var emptyResponse = AuthUserListResponse();
-    return _client.invoke<AuthUserListResponse>(ctx, 'Auth', 'UserList', request, emptyResponse);
-  }
-  $async.Future<AuthUserDeleteResponse> userDelete($pb.ClientContext? ctx, AuthUserDeleteRequest request) {
-    var emptyResponse = AuthUserDeleteResponse();
-    return _client.invoke<AuthUserDeleteResponse>(ctx, 'Auth', 'UserDelete', request, emptyResponse);
-  }
-  $async.Future<AuthUserChangePasswordResponse> userChangePassword($pb.ClientContext? ctx, AuthUserChangePasswordRequest request) {
-    var emptyResponse = AuthUserChangePasswordResponse();
-    return _client.invoke<AuthUserChangePasswordResponse>(ctx, 'Auth', 'UserChangePassword', request, emptyResponse);
-  }
-  $async.Future<AuthUserGrantRoleResponse> userGrantRole($pb.ClientContext? ctx, AuthUserGrantRoleRequest request) {
-    var emptyResponse = AuthUserGrantRoleResponse();
-    return _client.invoke<AuthUserGrantRoleResponse>(ctx, 'Auth', 'UserGrantRole', request, emptyResponse);
-  }
-  $async.Future<AuthUserRevokeRoleResponse> userRevokeRole($pb.ClientContext? ctx, AuthUserRevokeRoleRequest request) {
-    var emptyResponse = AuthUserRevokeRoleResponse();
-    return _client.invoke<AuthUserRevokeRoleResponse>(ctx, 'Auth', 'UserRevokeRole', request, emptyResponse);
-  }
-  $async.Future<AuthRoleAddResponse> roleAdd($pb.ClientContext? ctx, AuthRoleAddRequest request) {
-    var emptyResponse = AuthRoleAddResponse();
-    return _client.invoke<AuthRoleAddResponse>(ctx, 'Auth', 'RoleAdd', request, emptyResponse);
-  }
-  $async.Future<AuthRoleGetResponse> roleGet($pb.ClientContext? ctx, AuthRoleGetRequest request) {
-    var emptyResponse = AuthRoleGetResponse();
-    return _client.invoke<AuthRoleGetResponse>(ctx, 'Auth', 'RoleGet', request, emptyResponse);
-  }
-  $async.Future<AuthRoleListResponse> roleList($pb.ClientContext? ctx, AuthRoleListRequest request) {
-    var emptyResponse = AuthRoleListResponse();
-    return _client.invoke<AuthRoleListResponse>(ctx, 'Auth', 'RoleList', request, emptyResponse);
-  }
-  $async.Future<AuthRoleDeleteResponse> roleDelete($pb.ClientContext? ctx, AuthRoleDeleteRequest request) {
-    var emptyResponse = AuthRoleDeleteResponse();
-    return _client.invoke<AuthRoleDeleteResponse>(ctx, 'Auth', 'RoleDelete', request, emptyResponse);
-  }
-  $async.Future<AuthRoleGrantPermissionResponse> roleGrantPermission($pb.ClientContext? ctx, AuthRoleGrantPermissionRequest request) {
-    var emptyResponse = AuthRoleGrantPermissionResponse();
-    return _client.invoke<AuthRoleGrantPermissionResponse>(ctx, 'Auth', 'RoleGrantPermission', request, emptyResponse);
-  }
-  $async.Future<AuthRoleRevokePermissionResponse> roleRevokePermission($pb.ClientContext? ctx, AuthRoleRevokePermissionRequest request) {
-    var emptyResponse = AuthRoleRevokePermissionResponse();
-    return _client.invoke<AuthRoleRevokePermissionResponse>(ctx, 'Auth', 'RoleRevokePermission', request, emptyResponse);
-  }
 }
 

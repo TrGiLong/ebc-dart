@@ -1,7 +1,7 @@
 import 'package:ebc_dart/block_chain.dart';
 
 abstract class BlockChainRepository {
-  Future<void> putValue(String key, String value);
-  Future<String> getValue(String key);
+  Future<void> putValue(int index, String value);
+  Future<String> getValue(int index);
   Stream<Block> getAll();
 }

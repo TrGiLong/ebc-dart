@@ -28,4 +28,4 @@ curl -L "https://raw.githubusercontent.com/googleapis/api-common-protos/${GAPI_V
 curl -L "https://raw.githubusercontent.com/googleapis/api-common-protos/${GAPI_VERSION}/google/api/http.proto" > "${PROTO_TARGET}/google/api/http.proto"
 curl -L "https://raw.githubusercontent.com/protocolbuffers/protobuf/${PROTOBUF_VERSION}/src/google/protobuf/descriptor.proto" > "${PROTO_TARGET}/google/protobuf/descriptor.proto"
 
-find "$PROTO_TARGET" -iname '*.proto' | xargs -t protoc --dart_out="${TARGET}/lib/src" -I "$PROTO_TARGET"
+find "$PROTO_TARGET" -iname '*.proto' | xargs -t protoc --dart_out="grpc:${TARGET}/lib/src" -I "$PROTO_TARGET"

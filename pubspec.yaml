@@ -1,6 +1,7 @@
 name: ebc_dart
 description: A web server built using the shelf package.
 version: 1.0.0
+publish_to: none
 # homepage: https://www.example.com
 
 environment:
@@ -10,7 +11,10 @@ dependencies:
   args: ^2.0.0
   shelf: ^1.1.0
   crypto: ^3.0.1
-  http: ^0.13.3
+  grpc: ^3.0.2
+
+  etcd_client:
+    path: ./packages/etcd_client
   
 dev_dependencies:
   pedantic: ^1.10.0

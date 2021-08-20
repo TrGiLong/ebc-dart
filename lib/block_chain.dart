@@ -1,5 +1,7 @@
 // Int is 64 bit,
 
+import 'dart:convert';
+
 import 'package:ebc_dart/hash.dart';
 
 class Block {
@@ -66,6 +68,33 @@ class Block {
         hash.hashCode ^
         prevHash.hashCode;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'Index': index,
+      'Timestamp': timeStamp,
+      'Value': value,
+      'Hash': hash,
+      'PrevHash': prevHash,
+    };
+  }
+
+  factory Block.fromMap(Map<String, dynamic> map) {
+    return Block(
+      map['Index'],
+      map['Timestamp'],
+      map['Value'],
+      map['Hash'],
+      map['PrevHash'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Block.fromJson(String source) => Block.fromMap(json.decode(source));
+
+    @override
+  String toString() => '$index $value $hash $prevHash';
 }
 
 class BlockChain {
