@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:ebc_dart/block.dart';
-import 'package:ebc_dart/block_chain_repository.dart';
 import 'package:ebc_dart/utils.dart';
 import 'package:etcd_client/etcd_client.dart';
 import 'package:grpc/grpc.dart';
+
+import 'block_chain_repository.dart';
 
 class EtcdBlockChainRepository extends BlockChainRepository {
   final String keyPrefix;
@@ -34,7 +35,7 @@ class EtcdBlockChainRepository extends BlockChainRepository {
           ));
 
   @override
-  Stream<Block> getAll() async* {
+  Stream<Block> getBlockChain() async* {
     final response = await kvClient.range(
       RangeRequest(
         key: encoding.encode('$keyPrefix'),
@@ -50,22 +51,18 @@ class EtcdBlockChainRepository extends BlockChainRepository {
   }
 
   @override
-  Future<Block> getValue(int index) async {
+  Future<Block> getBlock(int index) async {
     final response = await kvClient
         .range(RangeRequest(key: encoding.encode('$keyPrefix$index')));
     return Block.fromJson(encoding.decode(response.kvs.first.value));
   }
 
   @override
-  Future<void> putValue(int key, Block block) async {
+  Future<void> insertBlock(int key, Block block) async {
     await kvClient.put(PutRequest(
       key: encoding.encode('$keyPrefix$key'),
       value: encoding.encode(block.toJson()),
     ));
-  }
-
-  void dispose() {
-    channel.shutdown();
   }
 
   @override
@@ -75,6 +72,11 @@ class EtcdBlockChainRepository extends BlockChainRepository {
         rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
         countOnly: true));
     return response.count.toInt();
+  }
+
+  @override
+  Future<void> dispose() async {
+    await channel.shutdown();
   }
 }
 

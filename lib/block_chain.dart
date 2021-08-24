@@ -5,9 +5,11 @@ import 'block.dart';
 class BlockChain {
   final BlockChainRepository repository;
 
-  static Future<bool> isValid(Stream<Block> chain) async {
+  BlockChain(this.repository);
+
+  Future<bool> isValid() async {
     Block? prevBlock;
-    await for (final block in chain) {
+    await for (final block in repository.getBlockChain()) {
       // First block
       if (prevBlock == null) {
         prevBlock = block;
