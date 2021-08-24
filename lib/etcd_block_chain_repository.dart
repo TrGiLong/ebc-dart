@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ebc_dart/block_chain.dart';
+import 'package:ebc_dart/block.dart';
 import 'package:ebc_dart/block_chain_repository.dart';
 import 'package:ebc_dart/utils.dart';
 import 'package:etcd_client/etcd_client.dart';
@@ -35,39 +35,46 @@ class EtcdBlockChainRepository extends BlockChainRepository {
 
   @override
   Stream<Block> getAll() async* {
-    final response = await kvClient.range(RangeRequest(
-      key: encoding.encode('$keyPrefix'),
-      rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
-      sortOrder: RangeRequest_SortOrder.ASCEND,
-      sortTarget: RangeRequest_SortTarget.CREATE,
-    ));
+    final response = await kvClient.range(
+      RangeRequest(
+        key: encoding.encode('$keyPrefix'),
+        rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
+        sortOrder: RangeRequest_SortOrder.ASCEND,
+        sortTarget: RangeRequest_SortTarget.CREATE,
+      ),
+    );
 
-    // First block was decoded wrong
     for (final kv in response.kvs) {
       yield kv.toBlock(encoding);
     }
-
-    // for (final block in response.kvs.map((e) => e.toBlock(encoding)).toList()
-    //   ..sort((a, b) => a.index.compareTo(b.index))) {
-    //   yield block;
-    // }
   }
 
   @override
-  Future<String> getValue(int index) async {
+  Future<Block> getValue(int index) async {
     final response = await kvClient
         .range(RangeRequest(key: encoding.encode('$keyPrefix$index')));
-    return encoding.decode(response.kvs.first.value);
+    return Block.fromJson(encoding.decode(response.kvs.first.value));
   }
 
   @override
-  Future<void> putValue(int key, String value) async {
+  Future<void> putValue(int key, Block block) async {
     await kvClient.put(PutRequest(
-        key: encoding.encode('$keyPrefix$key'), value: encoding.encode(value)));
+      key: encoding.encode('$keyPrefix$key'),
+      value: encoding.encode(block.toJson()),
+    ));
   }
 
   void dispose() {
     channel.shutdown();
+  }
+
+  @override
+  Future<int> count() async {
+    final response = await kvClient.range(RangeRequest(
+        key: encoding.encode('$keyPrefix'),
+        rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
+        countOnly: true));
+    return response.count.toInt();
   }
 }
 

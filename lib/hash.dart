@@ -1,8 +1,12 @@
-import 'package:crypto/crypto.dart';
+import 'package:crypto/crypto.dart' as cp;
 import 'dart:convert';
 
-/// sha256 is default hash funtion
-String defaultHash(String input) {
+String sha256(String input) {
   final bytes = utf8.encode(input);
-  return sha256.convert(bytes).toString();
+  return cp.sha256.convert(bytes).toString();
+}
+
+String sha1(String input) {
+  final bytes = utf8.encode(input);
+  return cp.sha1.convert(bytes).toString();
 }
