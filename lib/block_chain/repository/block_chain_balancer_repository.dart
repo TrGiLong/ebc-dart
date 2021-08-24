@@ -1,4 +1,4 @@
-import 'package:ebc_dart/block.dart';
+import 'package:ebc_dart/block_chain/block.dart';
 import 'package:grpc/grpc.dart';
 
 import 'block_chain_repository.dart';

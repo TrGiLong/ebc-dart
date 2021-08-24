@@ -1,4 +1,4 @@
-import 'package:ebc_dart/block.dart';
+import 'package:ebc_dart/block_chain/block.dart';
 
 abstract class BlockChainRepository {
   Future<void> insertBlock(int index, Block block);

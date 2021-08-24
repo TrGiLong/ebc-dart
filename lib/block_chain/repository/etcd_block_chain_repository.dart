@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ebc_dart/block.dart';
-import 'package:ebc_dart/utils.dart';
+import 'package:ebc_dart/block_chain/block.dart';
+import 'package:ebc_dart/block_chain/utils.dart';
 import 'package:etcd_client/etcd_client.dart';
 import 'package:grpc/grpc.dart';
 

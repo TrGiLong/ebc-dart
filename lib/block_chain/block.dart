@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:ebc_dart/hash.dart';
+import 'hash.dart';
 
 class Block {
   final int index;

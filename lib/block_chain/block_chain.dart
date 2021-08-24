@@ -1,6 +1,5 @@
-import 'package:ebc_dart/block_chain_repository.dart';
-
 import 'block.dart';
+import 'repository/block_chain_repository.dart';
 
 class BlockChain {
   final BlockChainRepository repository;
