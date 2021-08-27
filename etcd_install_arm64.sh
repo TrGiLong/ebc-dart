@@ -11,9 +11,9 @@ rm -f /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz
 rm -rf /tmp/etcd-download-test && mkdir -p /tmp/etcd-download-test
 
 curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-arm64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz
-tar xzvf /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz -C /tmp/etcd-download-test --strip-components=1
+tar xzvf /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz -C /tmp/test-etcd --strip-components=1
 rm -f /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz
 
-/tmp/etcd-download-test/etcd --version
-/tmp/etcd-download-test/etcdctl version
-/tmp/etcd-download-test/etcdutl version
+/tmp/test-etcd/etcd --version
+/tmp/test-etcd/etcdctl version
+/tmp/test-etcd/etcdutl version
