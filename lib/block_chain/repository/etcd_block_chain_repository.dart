@@ -52,26 +52,25 @@ class EtcdBlockChainRepository extends BlockChainRepository {
 
   @override
   Future<Block> getBlock(int index) async {
+    if (index == 1) return getBlockChain().first;
+
     final response = await kvClient
         .range(RangeRequest(key: encoding.encode('$keyPrefix$index')));
     return Block.fromJson(encoding.decode(response.kvs.first.value));
   }
 
   @override
-  Future<void> insertBlock(int key, Block block) async {
+  Future<Block> insertBlock(String key, Block block) async {
     await kvClient.put(PutRequest(
       key: encoding.encode('$keyPrefix$key'),
-      value: encoding.encode(block.toJson()),
+      value: encoding.encode(block.toJsonString()),
     ));
+    return block;
   }
 
   @override
   Future<int> count() async {
-    final response = await kvClient.range(RangeRequest(
-        key: encoding.encode('$keyPrefix'),
-        rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
-        countOnly: true));
-    return response.count.toInt();
+    return getBlockChain().length;
   }
 
   @override

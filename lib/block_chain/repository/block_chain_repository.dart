@@ -1,7 +1,7 @@
 import 'package:ebc_dart/block_chain/block.dart';
 
 abstract class BlockChainRepository {
-  Future<void> insertBlock(int index, Block block);
+  Future<Block> insertBlock(String index, Block block);
   Future<Block> getBlock(int index);
   Stream<Block> getBlockChain();
   Future<int> count();

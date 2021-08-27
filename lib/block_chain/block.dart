@@ -25,6 +25,17 @@ class Block {
     );
   }
 
+  factory Block.genesis() {
+    final timestampt = DateTime.now().millisecondsSinceEpoch;
+    return Block(
+      1,
+      timestampt,
+      'GENESIS',
+      _calculateHash('', timestampt, '', 1),
+      '',
+    );
+  }
+
   /// Calculate a hash value based on args
   static String _calculateHash(
     String prevHash,
@@ -89,7 +100,9 @@ class Block {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  Map toJson() => toMap();
+
+  String toJsonString() => jsonEncode(toJson());
 
   factory Block.fromJson(String source) => Block.fromMap(json.decode(source));
 

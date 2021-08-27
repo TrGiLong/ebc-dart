@@ -74,8 +74,8 @@ class BlockChainBalancerRepository extends BlockChainRepository {
   }
 
   @override
-  Future<void> insertBlock(int index, Block block) {
-    return _asyncExecute<void>(
+  Future<Block> insertBlock(String index, Block block) {
+    return _asyncExecute<Block>(
         endpoints.length, (repository) => repository.insertBlock(index, block));
   }
 

@@ -1,3 +1,5 @@
+import 'package:ebc_dart/block_chain/hash.dart';
+
 import 'block.dart';
 import 'repository/block_chain_repository.dart';
 
@@ -5,6 +7,36 @@ class BlockChain {
   final BlockChainRepository repository;
 
   BlockChain(this.repository);
+
+  Future<Block> get(int index) async {
+    return await repository.getBlock(index);
+  }
+
+  Future<Block> insert(String value) async {
+    final totalBlocks = await repository.count();
+    final prevBlock = await repository.getBlock(totalBlocks);
+
+    final block = Block.generate(prevBlock, value, totalBlocks + 1);
+    return await repository.insertBlock(block.index.toString(), block);
+  }
+
+  Future<int> count() async {
+    return repository.count();
+  }
+
+  Future<void> init() async {
+    if ((await repository.count()) == 0) {
+      final genesisBlock = Block.genesis();
+      final key = sha1(genesisBlock.toJsonString());
+      await repository.insertBlock(key, genesisBlock);
+    }
+
+    if (!(await isValid())) {
+      throw Exception('ERROR: blockchain not longer valid, exiting ...');
+    } else {
+      print('STATUS: blockchain is valid');
+    }
+  }
 
   Future<bool> isValid() async {
     Block? prevBlock;
@@ -19,5 +51,9 @@ class BlockChain {
       prevBlock = block;
     }
     return true;
+  }
+
+  Stream<Block> getBlockChain() {
+    return repository.getBlockChain();
   }
 }
