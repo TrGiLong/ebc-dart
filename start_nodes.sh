@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p public
 mkdir -p database
 IP=localhost
 ETCD_BIN=/tmp/test-etcd
