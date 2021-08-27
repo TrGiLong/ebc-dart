@@ -54,19 +54,20 @@ class BlockChainBalancerRepository extends BlockChainRepository {
   @override
   Future<int> count() {
     return _asyncExecute<int>(
-        endpoints.length, (repository) => repository.count());
+        endpoints.length * 3, (repository) => repository.count());
   }
 
   @override
   Future<Block> getBlock(int index) {
     return _asyncExecute<Block>(
-        endpoints.length, (repository) => repository.getBlock(index));
+        endpoints.length * 3, (repository) => repository.getBlock(index));
   }
 
   @override
-  Stream<Block> getBlockChain() {
-    return _syncExecute<Stream<Block>>(
-        endpoints.length, (repository) => repository.getBlockChain());
+  Stream<Block> getBlockChain() async* {
+    final result = await _asyncExecute<List<Block>>(
+        endpoints.length * 3, (repository) => repository.getBlockChain().toList());
+    yield* Stream.fromIterable(result);
   }
 
   void incrementPick() {
@@ -75,18 +76,21 @@ class BlockChainBalancerRepository extends BlockChainRepository {
 
   @override
   Future<Block> insertBlock(String index, Block block) {
-    return _asyncExecute<Block>(
-        endpoints.length, (repository) => repository.insertBlock(index, block));
+    return _asyncExecute<Block>(endpoints.length * 3,
+        (repository) => repository.insertBlock(index, block));
   }
 
   Future<T> _asyncExecute<T>(
     int tryAgain,
     Future<T> Function(BlockChainRepository) invoker,
-  ) {
+  ) async {
+    
     try {
       incrementPick();
-      return invoker.call(repositories[currentPick]);
+      print('STATUS: Balancer selects $currentPick');
+      return await invoker(repositories[currentPick]);
     } catch (e) {
+      print('Error: $e');
       if (tryAgain > 0) return _asyncExecute(tryAgain - 1, invoker);
       throw Exception('All server is down');
     }
@@ -98,7 +102,8 @@ class BlockChainBalancerRepository extends BlockChainRepository {
   ) {
     try {
       incrementPick();
-      return invoker.call(repositories[currentPick]);
+      print('STATUS: Balancer selects $currentPick');
+      return invoker(repositories[currentPick]);
     } catch (e) {
       if (tryAgain > 0) return _syncExecute(tryAgain - 1, invoker);
       throw Exception('All server is down');

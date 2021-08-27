@@ -5,6 +5,7 @@ import 'package:ebc_dart/block_chain/block_chain.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
+import 'package:shelf_static/shelf_static.dart' as shelf_static;
 
 class EbcServer {
   final int port;
@@ -13,7 +14,7 @@ class EbcServer {
   EbcServer({required this.port, required this.blockChain});
 
   Future<void> start() async {
-    final cascade = Cascade().add(_router);
+    final cascade = Cascade().add(_static).add(_router);
 
     final server = await shelf_io.serve(
       logRequests().addHandler(cascade.handler),
@@ -23,6 +24,9 @@ class EbcServer {
 
     print('STATUS: Serving at http://${server.address.host}:${server.port}');
   }
+
+  late final _static =
+      shelf_static.createStaticHandler('./public', defaultDocument: 'index.html');
 
   late final _router = shelf_router.Router()
     ..post('/api/block-chain/insert', _addBlockChain)
