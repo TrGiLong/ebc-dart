@@ -1,5 +1,3 @@
-// Int is 64 bit,
-
 import 'dart:convert';
 
 import 'hash.dart';
@@ -14,8 +12,9 @@ class Block {
   Block(this.index, this.timeStamp, this.value, this.hash, this.prevHash);
 
   /// Generate a new block
-  factory Block.generate(Block prevBlock, String value, int index) {
+  factory Block.generate(Block prevBlock, String value) {
     final timestampt = DateTime.now().millisecondsSinceEpoch;
+    final index = prevBlock.index + 1;
     return Block(
       index,
       timestampt,
@@ -31,7 +30,7 @@ class Block {
       1,
       timestampt,
       'GENESIS',
-      _calculateHash('', timestampt, '', 1),
+      _calculateHash('', timestampt, 'GENESIS', 1),
       '',
     );
   }
@@ -43,7 +42,7 @@ class Block {
     String value,
     int index,
   ) {
-    return sha256('%!l(int64=$timeStampt)d$index$value$prevHash');
+    return sha256('$timeStampt$index$value$prevHash');
   }
 
   /// Calculate a hash based on current information of block.

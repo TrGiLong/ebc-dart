@@ -27,13 +27,6 @@ class EtcdBlockChainRepository extends BlockChainRepository {
     kvClient = KVClient(channel);
   }
 
-  factory EtcdBlockChainRepository.local({String keyPrefix = 'ebc'}) =>
-      EtcdBlockChainRepository(
-          keyPrefix: keyPrefix,
-          channelOptions: ChannelOptions(
-            credentials: ChannelCredentials.insecure(),
-          ));
-
   @override
   Stream<Block> getBlockChain() async* {
     final response = await kvClient.range(
@@ -41,7 +34,6 @@ class EtcdBlockChainRepository extends BlockChainRepository {
         key: encoding.encode('$keyPrefix'),
         rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
         sortOrder: RangeRequest_SortOrder.ASCEND,
-        sortTarget: RangeRequest_SortTarget.CREATE,
       ),
     );
 
@@ -54,15 +46,14 @@ class EtcdBlockChainRepository extends BlockChainRepository {
   Future<Block> getBlock(int index) async {
     if (index == 1) return getBlockChain().first;
 
-    final response = await kvClient
-        .range(RangeRequest(key: encoding.encode('$keyPrefix$index')));
+    final response = await kvClient.range(RangeRequest(key: encodeKey(index)));
     return Block.fromJson(encoding.decode(response.kvs.first.value));
   }
 
   @override
-  Future<Block> insertBlock(String key, Block block) async {
+  Future<Block> insertBlock(Block block) async {
     await kvClient.put(PutRequest(
-      key: encoding.encode('$keyPrefix$key'),
+      key: encodeKey(block.index),
       value: encoding.encode(block.toJsonString()),
     ));
     return block;
@@ -70,12 +61,21 @@ class EtcdBlockChainRepository extends BlockChainRepository {
 
   @override
   Future<int> count() async {
-    return getBlockChain().length;
+    final response = await kvClient.range(RangeRequest(
+        key: encoding.encode('$keyPrefix'),
+        rangeEnd: incrementLastByte(encoding.encode('$keyPrefix')),
+        countOnly: true));
+    return response.count.toInt();
   }
 
   @override
   Future<void> dispose() async {
     await channel.shutdown();
+  }
+
+  List<int> encodeKey(int index) {
+    final indexStr = index.toString().padLeft(19, '0');
+    return encoding.encode('$keyPrefix-$indexStr');
   }
 }
 

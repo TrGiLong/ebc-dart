@@ -1,14 +1,19 @@
 import 'package:args/args.dart';
 import 'package:ebc_dart/block_chain/block_chain.dart';
 import 'package:ebc_dart/block_chain/repository/block_chain_balancer_repository.dart';
+import 'package:ebc_dart/block_chain/repository/etcd_block_chain_memory_effective_repository.dart';
+import 'package:ebc_dart/block_chain/repository/etcd_block_chain_repository.dart';
 import 'package:ebc_dart/server/server.dart';
+import 'package:etcd_client/etcd_client.dart';
 
 void main(List<String> args) async {
   var parser = ArgParser()
+    ..addFlag('memorySave', defaultsTo: false)
     ..addMultiOption('etcdEndpoints',
         abbr: 'e', defaultsTo: ['localhost:2379']);
   var data = parser.parse(args);
 
+  final memorySave = data['memorySave'];
   final endpoints = data['etcdEndpoints']
       .map((e) {
         final i = e.split(':');
@@ -18,7 +23,24 @@ void main(List<String> args) async {
       .whereType<Endpoint>()
       .toList();
 
-  final repository = BlockChainBalancerRepository.etcd(endpoints);
+  final channelOptions =
+      ChannelOptions(credentials: ChannelCredentials.insecure());
+  final repository = BlockChainBalancerRepository(
+    endpoints,
+    factory: (endpoint) {
+      if (memorySave) {
+        return EtcdBlockChainMemoryEffectiveRepository(
+            host: endpoint.host,
+            port: endpoint.port,
+            channelOptions: channelOptions);
+      } else {
+        return EtcdBlockChainRepository(
+            host: endpoint.host,
+            port: endpoint.port,
+            channelOptions: channelOptions);
+      }
+    },
+  );
   final blockchain = BlockChain(repository);
   await blockchain.init();
 

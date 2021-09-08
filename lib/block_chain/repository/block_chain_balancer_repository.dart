@@ -38,19 +38,6 @@ class BlockChainBalancerRepository extends BlockChainRepository {
     repositories = endpoints.map((endpoint) => factory.call(endpoint)).toList();
   }
 
-  factory BlockChainBalancerRepository.etcd(List<Endpoint> endpoints,
-      {String prefix = 'ebc'}) {
-    return BlockChainBalancerRepository(endpoints, prefix: prefix,
-        factory: (endpoint) {
-      return EtcdBlockChainRepository(
-          host: endpoint.host,
-          port: endpoint.port,
-          channelOptions: const ChannelOptions(
-            credentials: ChannelCredentials.insecure(),
-          ));
-    });
-  }
-
   @override
   Future<int> count() {
     return _asyncExecute<int>(
@@ -65,8 +52,8 @@ class BlockChainBalancerRepository extends BlockChainRepository {
 
   @override
   Stream<Block> getBlockChain() async* {
-    final result = await _asyncExecute<List<Block>>(
-        endpoints.length * 3, (repository) => repository.getBlockChain().toList());
+    final result = await _asyncExecute<List<Block>>(endpoints.length * 3,
+        (repository) => repository.getBlockChain().toList());
     yield* Stream.fromIterable(result);
   }
 
@@ -75,16 +62,15 @@ class BlockChainBalancerRepository extends BlockChainRepository {
   }
 
   @override
-  Future<Block> insertBlock(String index, Block block) {
-    return _asyncExecute<Block>(endpoints.length * 3,
-        (repository) => repository.insertBlock(index, block));
+  Future<Block> insertBlock(Block block) {
+    return _asyncExecute<Block>(
+        endpoints.length * 3, (repository) => repository.insertBlock(block));
   }
 
   Future<T> _asyncExecute<T>(
     int tryAgain,
     Future<T> Function(BlockChainRepository) invoker,
   ) async {
-    
     try {
       incrementPick();
       print('STATUS: Balancer selects $currentPick');
@@ -101,8 +87,7 @@ class BlockChainBalancerRepository extends BlockChainRepository {
     T Function(BlockChainRepository) invoker,
   ) {
     try {
-      incrementPick();
-      print('STATUS: Balancer selects $currentPick');
+      // print('STATUS: Balancer selects $currentPick');
       return invoker(repositories[currentPick]);
     } catch (e) {
       if (tryAgain > 0) return _syncExecute(tryAgain - 1, invoker);

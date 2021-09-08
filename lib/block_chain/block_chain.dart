@@ -16,8 +16,8 @@ class BlockChain {
     final totalBlocks = await repository.count();
     final prevBlock = await repository.getBlock(totalBlocks);
 
-    final block = Block.generate(prevBlock, value, totalBlocks + 1);
-    return await repository.insertBlock(block.index.toString(), block);
+    final block = Block.generate(prevBlock, value);
+    return await repository.insertBlock(block);
   }
 
   Future<int> count() async {
@@ -27,8 +27,7 @@ class BlockChain {
   Future<void> init() async {
     if ((await repository.count()) == 0) {
       final genesisBlock = Block.genesis();
-      final key = sha1(genesisBlock.toJsonString());
-      await repository.insertBlock(key, genesisBlock);
+      await repository.insertBlock(genesisBlock);
     }
 
     if (!(await isValid())) {
