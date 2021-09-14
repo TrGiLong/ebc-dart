@@ -17,7 +17,7 @@ void main() {
       expect(await blockchain.isValid(), true);
     });
 
-    test('Add 10 blocks to chains and test', () async {
+    test('Add 10 blocks to chains', () async {
       final blockchain = BlockChain(MemoryChainRepository());
       await blockchain.init();
 
