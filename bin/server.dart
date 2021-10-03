@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:args/args.dart';
 import 'package:ebc_dart/block_chain/block_chain.dart';
 import 'package:ebc_dart/block_chain/repository/block_chain_balancer_repository.dart';
@@ -43,6 +45,13 @@ void main(List<String> args) async {
   );
   final blockchain = BlockChain(repository);
   await blockchain.init();
+
+  Timer.periodic(Duration(seconds: 60), (_) async {
+    print('INFO: Check blockchain');
+    if (!(await blockchain.isValid())) {
+      throw Exception('ERROR: blockchain not longer valid, exiting ...');
+    }
+  });
 
   final server = EbcServer(blockChain: blockchain, port: 3000);
   await server.start();
